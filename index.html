@@ -17,7 +17,7 @@
     <script type="text/javascript">
         (function(){
             emailjs.init({
-              publicKey: "SUA_PUBLIC_KEY_AQUI",
+              publicKey: "7Xl9Bozht218HmHLU",
             });
         })();
     </script>
@@ -408,13 +408,18 @@
                         pin_code: geradorPin
                     };
                     
-                    await emailjs.send("SEU_SERVICE_ID", "SEU_TEMPLATE_ID", templateParams);
+                    // Adicionado window.emailjs para garantir que encontra a biblioteca globalmente
+                    await window.emailjs.send("service_iyt7gof", "template_0k1ndiq", templateParams);
 
                     alert("GATILHO EXECUTADO!\n\nDispositivo bloqueado na nuvem e PIN de resgate enviado com sucesso para:\n" + currentEmail);
                     
                 } catch (error) {
-                    console.error("Erro na operação:", error);
-                    alert("Comando enviado ao Firebase, mas houve falha na API do EmailJS.");
+                    console.error("Erro detalhado na operação:", error);
+                    
+                    // Captura o motivo exato da falha do EmailJS
+                    const detalheErro = error.text || error.message || JSON.stringify(error);
+                    alert("Comando enviado ao Firebase, mas houve falha na API do EmailJS.\n\nMotivo do erro: " + detalheErro);
+                    
                 } finally {
                     btn.innerText = "ACIONAR KILL SWITCH";
                     btn.disabled = false;
